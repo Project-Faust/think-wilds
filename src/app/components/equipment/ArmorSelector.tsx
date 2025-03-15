@@ -24,9 +24,6 @@ export default function ArmorSelector() {
         legs: "",
     });
 
-    // tracks popover open
-    const [activePopover, setActivePopover] = useState<string | null>(null);
-
     useEffect(() => {
         const fetchArmor = async () => {
             try {
@@ -86,14 +83,6 @@ export default function ArmorSelector() {
                 <p>Loading armor...</p>
             ) : (
                 <>
-                    {/* Background Overlay when Popover is Open */}
-                    {activePopover && (
-                        <div
-                            className="fixed inset-0 bg-black opacity-66 z-40"
-                            onClick={() => setActivePopover(null)} // Click outside to close
-                        ></div>
-                    )}
-
                     {/* Armor Selection */}
                     {armorSlots.map((slot, index) => (
                         <div key={slot} className="relative z-50">
@@ -102,7 +91,6 @@ export default function ArmorSelector() {
                                 className="btn btn-primary"
                                 popoverTarget={`popover-${index}`}
                                 style={{ anchorName: `--anchor-${index}` } as React.CSSProperties}
-                                onClick={() => setActivePopover(`popover-${index}`)}
                             >
                                 {selectedArmor[slot] || `Select ${slot.charAt(0).toUpperCase() + slot.slice(1)}`}
                             </button>
