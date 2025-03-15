@@ -5,14 +5,16 @@ import { useEffect, useState } from "react";
 // API endpoint for talismans
 const API_URL_TALISMAN = "https://wilds.mhdb.io/en/charms";
 
-// Define the expected structure of a talisman
+// Define expected structure of API response
 interface Skill {
-    name: string;
+    skill: {
+        name: string;
+    };
     level: number;
     description: string;
 }
 
-interface Talisman {
+interface TalismanRank {
     id: number;
     name: string;
     level: number;
@@ -20,8 +22,25 @@ interface Talisman {
     skills: Skill[];
 }
 
+interface TalismanAPIResponse {
+    ranks: TalismanRank[];
+}
+
+// Processed structure for UI
+interface ProcessedTalisman {
+    id: number;
+    name: string;
+    level: number;
+    rarity: number;
+    skills: {
+        name: string;
+        level: number;
+        description: string;
+    }[];
+}
+
 export default function TalismanSelector() {
-    const [talismanData, setTalismanData] = useState<Talisman[]>([]);
+    const [talismanData, setTalismanData] = useState<ProcessedTalisman[]>([]);
     const [selectedTalisman, setSelectedTalisman] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState<string>("");
@@ -30,16 +49,16 @@ export default function TalismanSelector() {
         const fetchTalismans = async () => {
             try {
                 const res = await fetch(API_URL_TALISMAN);
-                const data: any[] = await res.json();
+                const data: TalismanAPIResponse[] = await res.json();
 
                 // Flatten `ranks` arrays to get all talisman levels
-                const talismanList: Talisman[] = data.flatMap((talisman) =>
-                    talisman.ranks.map((rank: any) => ({
+                const talismanList: ProcessedTalisman[] = data.flatMap((talisman) =>
+                    talisman.ranks.map((rank) => ({
                         id: rank.id,
                         name: rank.name,
                         level: rank.level,
                         rarity: rank.rarity,
-                        skills: rank.skills.map((s: any) => ({
+                        skills: rank.skills.map((s) => ({
                             name: s.skill.name,
                             level: s.level,
                             description: s.description,
@@ -48,8 +67,8 @@ export default function TalismanSelector() {
                 );
 
                 // Group by base talisman name (highest level first)
-                const uniqueTalismans: Talisman[] = Object.values(
-                    talismanList.reduce((acc: Record<string, Talisman>, talisman) => {
+                const uniqueTalismans: ProcessedTalisman[] = Object.values(
+                    talismanList.reduce((acc: Record<string, ProcessedTalisman>, talisman) => {
                         if (!acc[talisman.name] || talisman.level > acc[talisman.name].level) {
                             acc[talisman.name] = talisman;
                         }
