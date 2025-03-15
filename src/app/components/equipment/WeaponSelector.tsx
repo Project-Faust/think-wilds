@@ -1,6 +1,27 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import { weaponTypes } from "./data";
+
+// API endpoint for weapons
+const API_URL_WEAPONS = "https://wilds.mhdb.io/en/weapons";
+
+// Predefined weapon types
+const weaponTypes = [
+    "Great Sword",
+    "Long Sword",
+    "Sword and Shield",
+    "Dual Blades",
+    "Hammer",
+    "Hunting Horn",
+    "Lance",
+    "Gunlance",
+    "Switch Axe",
+    "Charge Blade",
+    "Insect Glaive",
+    "Bow",
+    "Light Bowgun",
+    "Heavy Bowgun"
+] as const;
 
 export default function WeaponSelector() {
     const [selectedWeapons, setSelectedWeapons] = useState<{ primary: string; secondary: string }>({
@@ -9,30 +30,134 @@ export default function WeaponSelector() {
     });
 
     const [activeWeapon, setActiveWeapon] = useState<"primary" | "secondary">("primary");
+    const [weaponList, setWeaponList] = useState<any[]>([]);
+    const [selectedType, setSelectedType] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [searchQuery, setSearchQuery] = useState<string>("");
+
+    // Convert weapon type to match API requirements
+    const formatWeaponTypeForAPI = (type: string) => {
+        if (type === "Sword and Shield") return "sword-shield"; // Special case
+        return type.toLowerCase().replace(/\s/g, "-");
+    };
+
+    // Fetch weapons when a type is selected
+    useEffect(() => {
+        if (selectedType) {
+            setLoading(true);
+            const formattedType = formatWeaponTypeForAPI(selectedType);
+            fetch(`${API_URL_WEAPONS}?q={"kind":"${formattedType}"}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(`Fetched ${selectedType} weapons:`, data); // Debugging API payload
+                    setWeaponList(data);
+                    setLoading(false);
+                })
+                .catch((e) => {
+                    console.error("Error fetching weapons:", e);
+                    setLoading(false);
+                });
+        }
+    }, [selectedType]);
 
     const handleWeaponSelect = (slot: "primary" | "secondary", weapon: string) => {
         setSelectedWeapons((prev) => ({ ...prev, [slot]: weapon }));
+        setSelectedType(null); // Close submenu
+
+        // Close the popover after selection
+        document.getElementById("weapon-popover")?.hidePopover();
     };
 
     return (
-        <div className="flex flex-col items-center gap-10 m-10">
-            {/* Weapon Selectors */}
-            {(["primary", "secondary"] as const).map((slot) => (
-                <div key={slot} className="relative">
-                    <div className="dropdown dropdown-right">
-                        <button tabIndex={0} className={`btn ${activeWeapon === slot ? "btn-primary" : "btn-secondary"}`}>
-                            {selectedWeapons[slot] || `Select ${slot === "primary" ? "Primary" : "Secondary"} Weapon`}
-                        </button>
-                        <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow">
-                            {weaponTypes.map((weapon) => (
-                                <li key={weapon}>
-                                    <button onClick={() => handleWeaponSelect(slot, weapon)}>{weapon}</button>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-            ))}
+        <div className="relative flex flex-row items-center justify-evenly gap-5 m-5">
+            {/* Weapon Selection Popover */}
+            <button
+                className="btn btn-secondary"
+                popoverTarget="weapon-popover"
+                style={{ anchorName: "--anchor-weapon" } as React.CSSProperties}
+            >
+                {selectedWeapons[activeWeapon] || `Select ${activeWeapon === "primary" ? "Primary" : "Secondary"} Weapon`}
+            </button>
+
+            <ul
+                className="dropdown menu w-52 rounded-box bg-base-100 shadow-sm"
+                popover="auto"
+                id="weapon-popover"
+                style={{ positionAnchor: "--anchor-weapon" } as React.CSSProperties}
+            >
+                {!selectedType ? (
+                    // Weapon Type Selection (First Menu)
+                    weaponTypes.map((type) => (
+                        <li key={type}>
+                            <button
+                                onClick={() => setSelectedType(type)}
+                                className="hover:bg-gray-200 transition"
+                            >
+                                {type}
+                            </button>
+                        </li>
+                    ))
+                ) : (
+                    <>
+                        {/* Back Button */}
+                        <li>
+                            <button
+                                onClick={() => setSelectedType(null)}
+                                className="hover:bg-gray-200 transition"
+                            >
+                                ← Back to Weapon Types
+                            </button>
+                        </li>
+
+                        {/* Message Indicating Selection */}
+                        <li className="p-2 font-semibold text-primary">
+                            {selectedType} Weapons
+                        </li>
+
+                        {/* Search Bar */}
+                        <li className="p-2">
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                className="input input-bordered w-full"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                        </li>
+
+                        {/* Weapon List */}
+                        <li>
+                            <ul className="max-h-60 overflow-y-auto">
+                                {loading ? (
+                                    <li>Loading...</li>
+                                ) : weaponList.length > 0 ? (
+                                    weaponList
+                                        .filter((weapon) =>
+                                            weapon.name.toLowerCase().includes(searchQuery.toLowerCase())
+                                        )
+                                        .map((weapon) => (
+                                            <li key={weapon.id}>
+                                                <button
+                                                    onClick={() => handleWeaponSelect(activeWeapon, weapon.name)}
+                                                    className="hover:bg-gray-200 transition"
+                                                >
+                                                    {weapon.name}
+                                                </button>
+                                            </li>
+                                        ))
+                                ) : (
+                                    <li>No weapons available</li>
+                                )}
+                            </ul>
+                        </li>
+                    </>
+                )}
+            </ul>
+
+            {/* Active Weapon Display */}
+            <p className="text-lg font-semibold">
+                Active Weapon: <span className="text-primary">{selectedWeapons[activeWeapon] || "None Selected"}</span>
+            </p>
 
             {/* Active Weapon Toggle */}
             <button
@@ -41,11 +166,6 @@ export default function WeaponSelector() {
             >
                 Switch to {activeWeapon === "primary" ? "Secondary" : "Primary"} Weapon
             </button>
-
-            {/* Active Weapon Display */}
-            <p className="text-lg font-semibold">
-                Active Weapon: <span className="text-primary">{selectedWeapons[activeWeapon] || "None Selected"}</span>
-            </p>
         </div>
     );
 }
