@@ -73,14 +73,6 @@ export default function TalismanSelector() {
                 <p>Loading talismans...</p>
             ) : (
                 <>
-                    {/* Background Overlay when Popover is Open */}
-                    {activePopover && (
-                        <div
-                            className="fixed inset-0 bg-black opacity-66 z-40"
-                            onClick={() => setActivePopover(false)} // Click outside to close
-                        ></div>
-                    )}
-
                     {/* Talisman Selector */}
                     <div className="relative z-50">
                         {/* Button to trigger the popover */}
