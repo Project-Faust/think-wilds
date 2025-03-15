@@ -2,6 +2,12 @@
 
 import { useEffect, useState } from "react";
 
+// Define the expected structure of a weapon
+interface Weapon {
+    id: number;
+    name: string;
+}
+
 // API endpoint for weapons
 const API_URL_WEAPONS = "https://wilds.mhdb.io/en/weapons";
 
@@ -30,13 +36,13 @@ export default function WeaponSelector() {
     });
 
     const [activeWeapon, setActiveWeapon] = useState<"primary" | "secondary">("primary");
-    const [weaponList, setWeaponList] = useState<any[]>([]);
+    const [weaponList, setWeaponList] = useState<Weapon[]>([]); // Changed `any[]` to `Weapon[]`
     const [selectedType, setSelectedType] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState<string>("");
 
     // Convert weapon type to match API requirements
-    const formatWeaponTypeForAPI = (type: string) => {
+    const formatWeaponTypeForAPI = (type: string): string => {
         if (type === "Sword and Shield") return "sword-shield"; // Special case
         return type.toLowerCase().replace(/\s/g, "-");
     };
@@ -48,8 +54,8 @@ export default function WeaponSelector() {
             const formattedType = formatWeaponTypeForAPI(selectedType);
             fetch(`${API_URL_WEAPONS}?q={"kind":"${formattedType}"}`)
                 .then((res) => res.json())
-                .then((data) => {
-                    console.log(`Fetched ${selectedType} weapons:`, data); // Debugging API payload
+                .then((data: Weapon[]) => { // Explicitly typing fetched data
+                    console.log(`Fetched ${selectedType} weapons:`, data);
                     setWeaponList(data);
                     setLoading(false);
                 })
