@@ -101,9 +101,13 @@ export default function ArmorSelector() {
         fetchArmor();
     }, []);
 
-    const handleArmorSelect = (slot: typeof armorSlots[number], piece: string) => {
+    const handleArmorSelect = (slot: typeof armorSlots[number], piece: string, index: number) => {
         setSelectedArmor((prev) => ({ ...prev, [slot]: piece }));
+
+        // Close the popover after selection
+        document.getElementById(`popover-${index}`)?.hidePopover();
     };
+
 
     const handleSearchChange = (slot: typeof armorSlots[number], query: string) => {
         setSearchQuery((prev) => ({ ...prev, [slot]: query }));
@@ -152,7 +156,7 @@ export default function ArmorSelector() {
                                             ?.filter((armor) => armor.name.toLowerCase().includes(searchQuery[slot].toLowerCase()))
                                             .map((armor) => (
                                                 <li key={armor.id}>
-                                                    <button onClick={() => handleArmorSelect(slot, armor.name)}>
+                                                    <button onClick={() => handleArmorSelect(slot, armor.name, index)}>
                                                         {armor.name}
                                                     </button>
                                                 </li>
