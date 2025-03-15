@@ -15,3 +15,10 @@ export const weaponTypes = [
     "Heavy Bowgun"
 ]
 
+export const armorPieces = {
+    Head: ["Rathalos Helm", "Nargacuga Helm", "Anjanath Helm"],
+    Chest: ["Rathalos Mail", "Nargacuga Mail", "Anjanath Mail"],
+    Arms: ["Rathalos Vambraces", "Nargacuga Braces", "Anjanath Vambraces"],
+    Waist: ["Rathalos Coil", "Nargacuga Coil", "Anjanath Coil"],
+    Legs: ["Rathalos Greaves", "Nargacuga Greaves", "Anjanath Greaves"],
+};
