@@ -79,7 +79,7 @@ export default function ArmorSelector() {
                     // maintain lowercase
                     const slot = armor.kind?.trim().toLowerCase();
 
-                    if (armorSlots.includes(slot as any)) {
+                    if (armorSlots.includes(slot as typeof armorSlots[number])) {
                         armorBySlot[slot as keyof typeof armorBySlot].push(armor);
                     }
                     // debug when testing API filtering
