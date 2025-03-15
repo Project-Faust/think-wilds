@@ -6,8 +6,40 @@ import { useEffect, useState } from "react";
 const armorSlots = ["head", "chest", "arms", "waist", "legs"] as const;
 const API_URL_ARMOR = "https://wilds.mhdb.io/en/armor";
 
+// Define expected structure for API response
+interface Resistance {
+    fire: number;
+    water: number;
+    ice: number;
+    thunder: number;
+    dragon: number;
+}
+
+interface Skill {
+    skill: {
+        name: string;
+    };
+    level: number;
+}
+
+interface Armor {
+    id: number;
+    kind: string;
+    name: string;
+    description: string;
+    rank: string;
+    rarity: number;
+    resistances: Resistance;
+    defense: {
+        base: number;
+        max: number;
+    };
+    skills: Skill[];
+    slots: number[];
+}
+
 export default function ArmorSelector() {
-    const [armorData, setArmorData] = useState<Record<typeof armorSlots[number], any[]>>({
+    const [armorData, setArmorData] = useState<Record<typeof armorSlots[number], Armor[]>>({
         head: [],
         chest: [],
         arms: [],
@@ -28,14 +60,14 @@ export default function ArmorSelector() {
         const fetchArmor = async () => {
             try {
                 const res = await fetch(API_URL_ARMOR);
-                const data = await res.json();
+                const data: Armor[] = await res.json(); // Explicitly type fetched data
                 const armorList = Array.isArray(data) ? data : [data];
 
                 // debug log to test API filtering
                 // console.log("Processed (Total: ", armorList.length, "items):", armorList);
 
                 // Initialize armorBySlot with lowercase keys to match 
-                const armorBySlot: Record<typeof armorSlots[number], any[]> = {
+                const armorBySlot: Record<typeof armorSlots[number], Armor[]> = {
                     head: [],
                     chest: [],
                     arms: [],
@@ -60,7 +92,7 @@ export default function ArmorSelector() {
                 // console.log("Processed Armor Data: ", armorBySlot);
                 setArmorData(armorBySlot);
             } catch (e) {
-                console.error("Error fetching armor data: ", e);
+                console.error("Error fetching armor data:", e);
             } finally {
                 setLoading(false);
             }
