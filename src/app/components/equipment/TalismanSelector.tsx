@@ -17,9 +17,6 @@ export default function TalismanSelector() {
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState<string>("");
 
-    // tracks popover open
-    const [activePopover, setActivePopover] = useState<boolean>(false);
-
     useEffect(() => {
         const fetchTalismans = async () => {
             try {
@@ -64,7 +61,6 @@ export default function TalismanSelector() {
 
     const handleTalismanSelect = (talismanName: string) => {
         setSelectedTalisman(talismanName);
-        setActivePopover(false);
     };
 
     return (
@@ -80,7 +76,6 @@ export default function TalismanSelector() {
                             className="btn btn-primary"
                             popoverTarget="talisman-popover"
                             style={{ anchorName: "--anchor-talisman" } as React.CSSProperties}
-                            onClick={() => setActivePopover(true)}
                         >
                             {selectedTalisman || "Select Talisman"}
                         </button>
