@@ -81,7 +81,7 @@ export default function ArmorSelector() {
     };
 
     return (
-        <div className="relative flex flex-col gap-10 m-10">
+        <div className="relative flex flex-row flex-wrap items-center justify-center gap-5 m-5">
             {loading ? (
                 <p>Loading armor...</p>
             ) : (
@@ -89,7 +89,7 @@ export default function ArmorSelector() {
                     {/* Background Overlay when Popover is Open */}
                     {activePopover && (
                         <div
-                            className="fixed inset-0 bg-black bg-opacity-1 z-40"
+                            className="fixed inset-0 bg-black opacity-66 z-40"
                             onClick={() => setActivePopover(null)} // Click outside to close
                         ></div>
                     )}
@@ -99,7 +99,7 @@ export default function ArmorSelector() {
                         <div key={slot} className="relative z-50">
                             {/* Button to trigger the popover */}
                             <button
-                                className="btn btn-secondary"
+                                className="btn btn-primary"
                                 popoverTarget={`popover-${index}`}
                                 style={{ anchorName: `--anchor-${index}` } as React.CSSProperties}
                                 onClick={() => setActivePopover(`popover-${index}`)}
