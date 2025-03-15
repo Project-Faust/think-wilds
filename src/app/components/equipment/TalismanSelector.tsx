@@ -5,14 +5,23 @@ import { useEffect, useState } from "react";
 // API endpoint for talismans
 const API_URL_TALISMAN = "https://wilds.mhdb.io/en/charms";
 
-// testing endpoint for payload structure
-fetch("https://wilds.mhdb.io/en/charms")
-    .then(res => res.json())
-    .then(data => console.log(data));
+// Define the expected structure of a talisman
+interface Skill {
+    name: string;
+    level: number;
+    description: string;
+}
 
+interface Talisman {
+    id: number;
+    name: string;
+    level: number;
+    rarity: number;
+    skills: Skill[];
+}
 
 export default function TalismanSelector() {
-    const [talismanData, setTalismanData] = useState<any[]>([]);
+    const [talismanData, setTalismanData] = useState<Talisman[]>([]);
     const [selectedTalisman, setSelectedTalisman] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState<string>("");
@@ -21,10 +30,10 @@ export default function TalismanSelector() {
         const fetchTalismans = async () => {
             try {
                 const res = await fetch(API_URL_TALISMAN);
-                const data = await res.json();
+                const data: any[] = await res.json();
 
                 // Flatten `ranks` arrays to get all talisman levels
-                const talismanList = data.flatMap((talisman: any) =>
+                const talismanList: Talisman[] = data.flatMap((talisman) =>
                     talisman.ranks.map((rank: any) => ({
                         id: rank.id,
                         name: rank.name,
@@ -39,8 +48,8 @@ export default function TalismanSelector() {
                 );
 
                 // Group by base talisman name (highest level first)
-                const uniqueTalismans = Object.values(
-                    talismanList.reduce((acc: any, talisman: any) => {
+                const uniqueTalismans: Talisman[] = Object.values(
+                    talismanList.reduce((acc: Record<string, Talisman>, talisman) => {
                         if (!acc[talisman.name] || talisman.level > acc[talisman.name].level) {
                             acc[talisman.name] = talisman;
                         }
@@ -61,6 +70,7 @@ export default function TalismanSelector() {
 
     const handleTalismanSelect = (talismanName: string) => {
         setSelectedTalisman(talismanName);
+        document.getElementById("talisman-popover")?.hidePopover(); // Close popover after selection
     };
 
     return (
