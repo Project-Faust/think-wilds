@@ -75,7 +75,7 @@ export default function WeaponSelector() {
     };
 
     return (
-        <div className="relative flex flex-row items-center justify-evenly gap-5 m-5">
+        <div className="relative flex flex-row flex-wrap items-center justify-evenly gap-5 m-5">
             {/* Weapon Selection Popover */}
             <button
                 className="btn btn-secondary"
