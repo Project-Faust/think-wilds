@@ -36,7 +36,7 @@ export default function WeaponSelector() {
     });
 
     const [activeWeapon, setActiveWeapon] = useState<"primary" | "secondary">("primary");
-    const [weaponList, setWeaponList] = useState<Weapon[]>([]); // Changed `any[]` to `Weapon[]`
+    const [weaponList, setWeaponList] = useState<Weapon[]>([]); // specifically typed `Weapon[]`
     const [selectedType, setSelectedType] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState<string>("");
@@ -162,12 +162,12 @@ export default function WeaponSelector() {
 
             {/* Active Weapon Display */}
             <p className="text-lg font-semibold">
-                Active Weapon: <span className="text-primary">{selectedWeapons[activeWeapon] || "None Selected"}</span>
+                Active Weapon: <span className="text-secondary">{selectedWeapons[activeWeapon] || "None Selected"}</span>
             </p>
 
             {/* Active Weapon Toggle */}
             <button
-                className="btn btn-accent"
+                className="btn btn-neutral"
                 onClick={() => setActiveWeapon((prev) => (prev === "primary" ? "secondary" : "primary"))}
             >
                 Switch to {activeWeapon === "primary" ? "Secondary" : "Primary"} Weapon
