@@ -102,7 +102,7 @@ export default function TalismanSelector() {
                     <div className="relative z-50">
                         {/* Button to trigger the popover */}
                         <button
-                            className="btn btn-primary"
+                            className="btn btn-accent"
                             popoverTarget="talisman-popover"
                             style={{ anchorName: "--anchor-talisman" } as React.CSSProperties}
                         >
