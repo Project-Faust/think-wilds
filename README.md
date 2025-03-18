@@ -42,9 +42,6 @@
 ## **📜 License**
 This project is licensed under the **MIT License**. 
 
-
----
-
 ## **⚠️ Disclaimer Regarding API Usage**
 This project **relies on the Monster Hunter Wilds DB API**, which is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**. However:  
 - **This project does not modify, host, or distribute the API itself.**  
