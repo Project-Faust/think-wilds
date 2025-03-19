@@ -2,7 +2,6 @@
 
 // import ArmorTalismanStatus from "./ArmorTalismanStatus";
 // import WeaponStatus from "./WeaponStatus";
-// import { useState } from "react";
 import useEquipmentStore from "../storage/EquipmentStorage";
 
 export default function StatusSheet() {
