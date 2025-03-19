@@ -1,3 +1,4 @@
+import StatusSheet from "./components/build/StatusSheet";
 import ArmorSelector from "./components/equipment/ArmorSelector";
 import TalismanSelector from "./components/equipment/TalismanSelector";
 import WeaponSelector from "./components/equipment/WeaponSelector";
@@ -12,6 +13,7 @@ export default function Home() {
       <WeaponSelector />
       <ArmorSelector />
       <TalismanSelector />
+      <StatusSheet />
     </div>
   );
 }
