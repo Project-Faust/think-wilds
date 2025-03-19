@@ -36,14 +36,18 @@ interface BuffsState {
         peakPerformance: boolean;
         heroics: boolean;
         latentPower: boolean;
-        critElement: boolean;
-        critStatus: boolean;
+        // critElement: boolean;
+        // critStatus: boolean;
     };
     consumableBuffs: {
         demonDrug: boolean;
         megaDemonDrug: boolean;
         mightSeed: boolean;
         mightPill: boolean;
+        armorSkin: boolean;
+        megaArmorSkin: boolean;
+        adamantSeed: boolean;
+        adamantPill: boolean;
     };
     toggleInventoryCharm: (charm: keyof BuffsState["inventoryCharms"]) => void;
     toggleConditionalSkill: (skill: keyof BuffsState["conditionalSkills"]) => void;
@@ -86,8 +90,8 @@ const useEquipmentStore = create<EquipmentState>((set) => ({
     // inventory charms are permanent on a per-hunt basis
     // state depends on if user has charms or not
     inventoryCharms: {
-        armorCharm: false,
-        powerCharm: false,
+        armorCharm: true,
+        powerCharm: true,
     },
 
     // assumed to not be persistent throughout an entire hunt
@@ -98,16 +102,20 @@ const useEquipmentStore = create<EquipmentState>((set) => ({
         peakPerformance: false,
         heroics: false,
         latentPower: false,
-        critElement: false,
-        critStatus: false,
+        // critElement: false,
+        // critStatus: false,
     },
     // TO-DO:
     // each subtype should be mutually exclusive
     consumableBuffs: {
-        demonDrug: false,
+        demonDrug: true,
         megaDemonDrug: false,
         mightSeed: false,
         mightPill: false,
+        armorSkin: true,
+        megaArmorSkin: false,
+        adamantSeed: false,
+        adamantPill: false,
     },
 
     toggleInventoryCharm: (charm) =>
