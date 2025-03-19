@@ -5,9 +5,9 @@
 import { useState } from "react";
 
 export default function StatusSheet() {
-    const [maxMight, setMaxMight] = useState(false);
-    const [peakPerformance, setPeakPerformance] = useState(false);
-    const [agitator, setAgitator] = useState(false);
+    // const [maxMight, setMaxMight] = useState(false);
+    // const [peakPerformance, setPeakPerformance] = useState(false);
+    // const [agitator, setAgitator] = useState(false);
 
     return (
         <div className="">
@@ -17,9 +17,9 @@ export default function StatusSheet() {
             <div className="flex flex-wrap border border-3 rounded-lg p-5 m-5">
 
                 {/* Base Stats */}
-                <div className="flex-1 col m-5">
+                <div className="flex flex-col flex-1 items-center m-5">
                     <h2 className="row text-center text-xl p-3">Stats Before Modifiers</h2>
-                    <ul className="row border rounded-lg max-w-1/2 p-3">
+                    <ul className="row text-end border rounded-lg p-3">
                         <li id="base-raw"
                             className="my-2">
                             Base Raw: --
@@ -32,13 +32,28 @@ export default function StatusSheet() {
                             className="my-2">
                             Base Element: --
                         </li>
+                        <li id="base-defense"
+                            className="my-2">
+                            Base Defense: --
+                        </li>
+                        <li id="base-ele-res"
+                            className="border-t my-2">
+                                Base Resistances
+                            <ul>
+                                <li>Fire: --</li>
+                                <li>Water: --</li>
+                                <li>Ice: --</li>
+                                <li>Thunder: --</li>
+                                <li>Dragon: --</li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
 
                 {/* Modified stats */}
-                <div className="flex-1 col m-5">
+                <div className="flex flex-1 flex-col items-center m-5">
                     <h2 className="row text-center text-xl p-3">Modified Stats</h2>
-                    <ul className="row border rounded-lg max-w-1/2 p-3">
+                    <ul className="row text-end border rounded-lg p-3">
                         <li id="efr"
                             className="my-2">
                             Effective Raw (EFR): --
@@ -50,6 +65,21 @@ export default function StatusSheet() {
                         <li id="modified-element"
                             className="my-2">
                             Effective Element: --
+                        </li>
+                        <li id="modified-defense"
+                            className="my-2">
+                            Effective Defense: --
+                        </li>
+                        <li id="modified-ele-res"
+                            className="border-t my-2">
+                                Modified Resistances
+                            <ul>
+                                <li>Fire: --</li>
+                                <li>Water: --</li>
+                                <li>Ice: --</li>
+                                <li>Thunder: --</li>
+                                <li>Dragon: --</li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
