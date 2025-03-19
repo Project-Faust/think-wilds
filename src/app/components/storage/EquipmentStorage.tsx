@@ -76,8 +76,8 @@ const useEquipmentStore = create<EquipmentState>((set) => ({
                     base: armor.defense.base,
                 },
                 resistances: armor.resistances,
-                skills: armor.skills.map((skill: any) => ({
-                    name: skill.skillName,
+                skills: armor.skills.map((skill) => ({
+                    name: skill.name,
                     level: skill.level,
                 })),
             },
