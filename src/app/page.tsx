@@ -3,6 +3,9 @@ import ArmorSelector from "./components/equipment/ArmorSelector";
 import TalismanSelector from "./components/equipment/TalismanSelector";
 import WeaponSelector from "./components/equipment/WeaponSelector";
 
+// Testing components
+// import TalismanTest from "./components/devTestComponents/TalismanTest";
+
 export default function Home() {
   return (
     <div>
@@ -14,6 +17,9 @@ export default function Home() {
       <ArmorSelector />
       <TalismanSelector />
       <StatusSheet />
+
+      {/* Testing Components */}
+      {/* <TalismanTest /> */}
     </div>
   );
 }
