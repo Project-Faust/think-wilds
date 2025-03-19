@@ -9,6 +9,7 @@
 ### **v 0.9.1 Current**
 - Status page to display hunter stats such as **base true raw, base affinity, base defense, and base elemental resistances**.  
 - Skill display to show **which armor skills (including set bonuses) are active**.  
+- Toggle selection for conditional buffs such as Armor/Power Charm, consumable items, player/monster conditions (Agitator, Heroics, Maximum Might, etc.)
 
 ### **v 0.9.2 Development (Coming Changes)**
 - Additional API functionality to provide **data for decorations**.  
