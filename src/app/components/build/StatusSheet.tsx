@@ -2,7 +2,7 @@
 
 // import ArmorTalismanStatus from "./ArmorTalismanStatus";
 // import WeaponStatus from "./WeaponStatus";
-import { useState } from "react";
+// import { useState } from "react";
 
 export default function StatusSheet() {
     // const [maxMight, setMaxMight] = useState(false);
