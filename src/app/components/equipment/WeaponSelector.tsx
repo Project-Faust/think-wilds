@@ -36,7 +36,7 @@ export default function WeaponSelector() {
     });
 
     const [activeWeapon, setActiveWeapon] = useState<"primary" | "secondary">("primary");
-    const [weaponList, setWeaponList] = useState<Weapon[]>([]); // specifically typed `Weapon[]`
+    const [weaponList, setWeaponList] = useState<Weapon[]>([]);
     const [selectedType, setSelectedType] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState<string>("");
@@ -54,7 +54,7 @@ export default function WeaponSelector() {
             const formattedType = formatWeaponTypeForAPI(selectedType);
             fetch(`${API_URL_WEAPONS}?q={"kind":"${formattedType}"}`)
                 .then((res) => res.json())
-                .then((data: Weapon[]) => { // Explicitly typing fetched data
+                .then((data: Weapon[]) => {
                     console.log(`Fetched ${selectedType} weapons:`, data);
                     setWeaponList(data);
                     setLoading(false);
