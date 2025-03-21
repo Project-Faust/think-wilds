@@ -24,13 +24,13 @@ export default function StatusSheet() {
             <h1 className="text-center text-3xl font-bold p-5 m-5">Hunter Status</h1>
 
             {/* parent flex */}
-            <div className="flex flex-wrap justify-evenly m-0">
+            <div className="flex flex-row flex-wrap justify-evenly m-0">
 
                 {/* base stats flex container */}
-                <div className="basis-1/4 flex flex-wrap justify-center gap-x-5 border border-3 rounded-lg p-5 m-5">
+                <div className="flex flex-col grow justify-center gap-x-5 border border-3 rounded-lg p-5 m-5">
 
                     {/* Base Stats */}
-                    <div className="basis-1/2 m-5">
+                    <div className="m-5">
                         <h2 className="text-center text-xl p-3">Base Modifiers</h2>
                         <ul className="text-end border rounded-lg p-3">
                             <li id="base-raw"
@@ -64,7 +64,7 @@ export default function StatusSheet() {
                     </div>
 
                     {/* Modified stats */}
-                    <div className="basis-1/2 m-5">
+                    <div className="m-5">
                         <h2 className="text-center text-xl p-3">Modified Stats</h2>
                         <ul className="text-end border rounded-lg p-3">
                             <li id="efr"
@@ -100,7 +100,7 @@ export default function StatusSheet() {
                 </div>
 
                 {/* skills flex conatiner */}
-                <div className="basis-1/4 flex flex-wrap justify-center gap-x-5 border border-3 rounded-lg p-5 m-5">
+                <div className="flex flex-col grow gap-x-5 border border-3 rounded-lg p-5 m-5">
 
                     {/* weapon skills */}
                     <div className="basis-1/2 m-5">
@@ -120,7 +120,7 @@ export default function StatusSheet() {
                 </div>
 
                 {/* toggle for conditionals */}
-                <div className="basis-1/4 inline-flex flex-col flex-wrap items-center gap-x-5 border border-3 rounded-lg p-5 m-5">
+                <div className="flex flex-col grow text-center gap-x-5 border border-3 rounded-lg p-5 m-5">
                     <h2 className="text-center text-2xl p-3">Buffs & Conditionals</h2>
 
                     {/* Inventory Charms */}
