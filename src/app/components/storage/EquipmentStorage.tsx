@@ -36,8 +36,6 @@ interface BuffsState {
         peakPerformance: boolean;
         heroics: boolean;
         latentPower: boolean;
-        // critElement: boolean;
-        // critStatus: boolean;
     };
     consumableBuffs: {
         demonDrug: boolean;
@@ -89,6 +87,7 @@ const useEquipmentStore = create<EquipmentState>((set) => ({
 
     // inventory charms are permanent on a per-hunt basis
     // state depends on if user has charms or not
+    // assume hunters using this app have charms by default
     inventoryCharms: {
         armorCharm: true,
         powerCharm: true,
@@ -102,11 +101,11 @@ const useEquipmentStore = create<EquipmentState>((set) => ({
         peakPerformance: false,
         heroics: false,
         latentPower: false,
-        // critElement: false,
-        // critStatus: false,
     },
+
     // TO-DO:
     // each subtype should be mutually exclusive
+    // assume armorSkin and demonDrug due to ease of accessibility
     consumableBuffs: {
         demonDrug: true,
         megaDemonDrug: false,
